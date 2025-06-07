@@ -6,47 +6,45 @@ type TOrderSearchState = {
   allOrders: TOrder[];
   orderDetails: TOrder | null;
   isFetching: boolean;
-  rawResponse: null;
+  rawResponse: null;  
   fetchError: string | null;
 };
 
-export const initialState: TOrderSearchState = {
+const initialState: TOrderSearchState = {
   allOrders: [],
   orderDetails: null,
   isFetching: false,
   rawResponse: null,
-  fetchError: null
+  fetchError: null,
 };
 
 export const fetchOrderDetails = createAsyncThunk(
   'orderSearch/fetchByNumber',
-  async (orderNumber: number) => getOrderByNumberApi(orderNumber)
+  (orderNumber: number) => getOrderByNumberApi(orderNumber)
 );
 
-export const orderSearchSlice = createSlice({
+const orderSearchSlice = createSlice({
   name: 'orderSearch',
   initialState,
   reducers: {},
-  selectors: {
-    selectOrderSearchState: (state: any) => state
-  },
-  extraReducers: (builder: { addCase: (arg0: any, arg1: (state: any) => void) => { (): any; new(): any; addCase: { (arg0: any, arg1: (state: any, action: any) => void): { (): any; new(): any; addCase: { (arg0: any, arg1: (state: any, action: any) => void): void; new(): any; }; }; new(): any; }; }; }) => {
+  extraReducers: builder => {
     builder
-      .addCase(fetchOrderDetails.pending, (state: { fetchError: null; isFetching: boolean; }) => {
-        state.fetchError = null;
+      .addCase(fetchOrderDetails.pending, state => {
         state.isFetching = true;
-      })
-      .addCase(fetchOrderDetails.rejected, (state: { fetchError: string; isFetching: boolean; }, action: { error: { message: string; }; }) => {
-        state.fetchError = action.error.message as string;
-        state.isFetching = false;
-      })
-      .addCase(fetchOrderDetails.fulfilled, (state: { fetchError: null; isFetching: boolean; orderDetails: any; }, action: { payload: { orders: any[]; }; }) => {
         state.fetchError = null;
+      })
+      .addCase(fetchOrderDetails.rejected, (state, action) => {
         state.isFetching = false;
+        state.fetchError = action.error.message ?? 'Failed to fetch order';
+      })
+      .addCase(fetchOrderDetails.fulfilled, (state, action) => {
+        state.isFetching = false;
+        state.fetchError = null;
         state.orderDetails = action.payload.orders[0];
       });
   }
 });
 
-export const { selectOrderSearchState } = orderSearchSlice.selectors;
+export const selectOrderSearchState = (state: { orderSearch: TOrderSearchState }) => state.orderSearch;
+
 export default orderSearchSlice.reducer;

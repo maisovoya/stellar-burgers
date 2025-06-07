@@ -2,7 +2,7 @@ import { orderBurgerApi } from '../../utils/burger-api';
 import { PayloadAction, createAsyncThunk, createSlice, nanoid } from '@reduxjs/toolkit';
 import { TConstructorIngredient, TIngredient, TOrder } from '@utils-types';
 
-export type TburgerCreationState = {
+export type TBurgerCreationState = {
   loading: boolean;
   creationData: {
     selectedBun: TConstructorIngredient | null;
@@ -13,7 +13,7 @@ export type TburgerCreationState = {
   error: string | null;
 };
 
-export const initialState: TburgerCreationState = {
+export const initialState: TBurgerCreationState = {
   loading: false,
   creationData: {
     selectedBun: null,
@@ -40,7 +40,7 @@ export const burgerCreationSlice = createSlice({
   initialState,
   reducers: {
     addItem: {
-      reducer: (state: { creationData: { selectedBun: any; filling: any[]; }; }, action: PayloadAction<TConstructorIngredient>) => {
+      reducer: (state, action: PayloadAction<TConstructorIngredient>) => {
         if (action.payload.type === 'bun') {
           state.creationData.selectedBun = action.payload;
         } else {
@@ -51,37 +51,37 @@ export const burgerCreationSlice = createSlice({
         payload: { ...ingredient, id: nanoid() }
       })
     },
-    removeItem: (state: { builderData: { filling: any[]; }; }, action: PayloadAction<string>) => {
-      state.builderData.filling = state.builderData.filling.filter((item: { id: any; }) => item.id !== action.payload);
+    removeItem: (state, action: PayloadAction<string>) => {
+      state.creationData.filling = state.creationData.filling.filter(item => item.id !== action.payload);
     },
-    moveItemUp: (state: { builderData: { filling: TConstructorIngredient[]; }; }, action: PayloadAction<number>) => {
-      moveItem(state.builderData.filling, action.payload, action.payload - 1);
+    moveItemUp: (state, action: PayloadAction<number>) => {
+      moveItem(state.creationData.filling, action.payload, action.payload - 1);
     },
-    moveItemDown: (state: { builderData: { filling: TConstructorIngredient[]; }; }, action: PayloadAction<number>) => {
-      moveItem(state.builderData.filling, action.payload, action.payload + 1);
+    moveItemDown: (state, action: PayloadAction<number>) => {
+      moveItem(state.creationData.filling, action.payload, action.payload + 1);
     },
-    clearOrderDetails: (state: { orderDetails: null; }) => {
+    clearOrderDetails: (state) => {
       state.orderDetails = null;
     }
   },
-  extraReducers: (builder: { addCase: (arg0: any, arg1: (state: any) => void) => { (): any; new(): any; addCase: { (arg0: any, arg1: (state: any, action: any) => void): { (): any; new(): any; addCase: { (arg0: any, arg1: (state: any, action: any) => void): void; new(): any; }; }; new(): any; }; }; }) => {
+  extraReducers: builder => {
     builder
-      .addCase(submitBurgerOrder.pending, (state: { loading: boolean; ordering: boolean; error: null; }) => {
+      .addCase(submitBurgerOrder.pending, (state) => {
         state.loading = true;
         state.ordering = true;
         state.error = null;
       })
-      .addCase(submitBurgerOrder.rejected, (state: { loading: boolean; ordering: boolean; error: any; }, action: { error: { message: string; }; }) => {
+      .addCase(submitBurgerOrder.rejected, (state, action) => {
         state.loading = false;
         state.ordering = false;
         state.error = action.error.message ?? 'Order failed';
       })
-      .addCase(submitBurgerOrder.fulfilled, (state: { loading: boolean; ordering: boolean; error: null; orderDetails: any; builderData: { selectedBun: null; filling: never[]; }; }, action: { payload: { order: any; }; }) => {
+      .addCase(submitBurgerOrder.fulfilled, (state, action) => {
         state.loading = false;
         state.ordering = false;
         state.error = null;
         state.orderDetails = action.payload.order;
-        state.builderData = {
+        state.creationData = {
           selectedBun: null,
           filling: []
         };
@@ -97,6 +97,6 @@ export const {
   clearOrderDetails
 } = burgerCreationSlice.actions;
 
-export const selectBurgerBuilder = (state: { burgerBuilder: TburgerCreationState }) => state.burgerBuilder;
+export const selectBurgerBuilder = (state: { burgerCreation: TBurgerCreationState }) => state.burgerCreation;
 
 export default burgerCreationSlice.reducer;

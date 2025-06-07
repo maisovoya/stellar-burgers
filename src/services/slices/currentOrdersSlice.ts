@@ -2,7 +2,7 @@ import { getFeedsApi } from '../../utils/burger-api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TOrder } from '@utils-types';
 
-type TcurrentOrdersState = {
+type TCurrentOrdersState = {
   liveOrders: TOrder[];
   totalCompleted: number;
   completedToday: number;
@@ -10,40 +10,41 @@ type TcurrentOrdersState = {
   fetchError: string | null;
 };
 
-export const initialState: TcurrentOrdersState = {
+const initialState: TCurrentOrdersState = {
   liveOrders: [],
   totalCompleted: 0,
   completedToday: 0,
   isLoading: false,
-  fetchError: null
+  fetchError: null,
 };
 
 export const fetchCurrentOrders = createAsyncThunk('currentOrders/fetchAll', getFeedsApi);
-export const currentOrdersSlice = createSlice({
+
+const currentOrdersSlice = createSlice({
   name: 'currentOrders',
   initialState,
   reducers: {},
-  selectors: {
-    selectLiveOrdersState: (state: any) => state
-  },
-  extraReducers: (builder: { addCase: (arg0: any, arg1: (state: any) => void) => { (): any; new(): any; addCase: { (arg0: any, arg1: (state: any, action: any) => void): { (): any; new(): any; addCase: { (arg0: any, arg1: (state: any, action: any) => void): void; new(): any; }; }; new(): any; }; }; }) => {
+  extraReducers: builder => {
     builder
-      .addCase(fetchCurrentOrders.pending, (state: { isLoading: boolean; fetchError: null; }) => {
+      .addCase(fetchCurrentOrders.pending, (state) => {
         state.isLoading = true;
         state.fetchError = null;
       })
-      .addCase(fetchCurrentOrders.rejected, (state: { isLoading: boolean; fetchError: string; }, action: { error: { message: string; }; }) => {
+      .addCase(fetchCurrentOrders.rejected, (state, action) => {
         state.isLoading = false;
-        state.fetchError = action.error.message as string;
+        state.fetchError = action.error.message ?? 'Failed to fetch orders';
       })
-      .addCase(fetchCurrentOrders.fulfilled, (state: { isLoading: boolean; fetchError: null; liveOrders: any; totalCompleted: any; completedToday: any; }, action: { payload: { orders: any; total: any; totalToday: any; }; }) => {
+      .addCase(fetchCurrentOrders.fulfilled, (state, action) => {
         state.isLoading = false;
         state.fetchError = null;
         state.liveOrders = action.payload.orders;
         state.totalCompleted = action.payload.total;
         state.completedToday = action.payload.totalToday;
       });
-  }
+  },
 });
-export const { selectLiveOrdersState } = currentOrdersSlice.selectors;
+
+
+export const selectCurrentOrders = (state: { currentOrders: TCurrentOrdersState }) => state.currentOrders;
+
 export default currentOrdersSlice.reducer;
