@@ -1,6 +1,7 @@
 import { getIngredientsApi } from '../../utils/burger-api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TIngredient } from '@utils-types';
+import { RootState } from '../../services/store';
 
 type TIngredientCatalogState = {
   inventoryItems: TIngredient[];
@@ -38,6 +39,6 @@ const inventorySlice = createSlice({
   },
 });
 
-export const selectInventoryState = (state: { inventory: TIngredientCatalogState }) => state.inventory;
+export const selectInventoryState = (state: RootState) => state.ingredientCatalog;
 
 export default inventorySlice.reducer;
