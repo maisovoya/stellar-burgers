@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TOrder } from '@utils-types';
 
 type TCurrentOrdersState = {
-  liveOrders: TOrder[];
+  currentOrders: TOrder[];
   totalCompleted: number;
   completedToday: number;
   isLoading: boolean;
@@ -11,7 +11,7 @@ type TCurrentOrdersState = {
 };
 
 const initialState: TCurrentOrdersState = {
-  liveOrders: [],
+  currentOrders: [],
   totalCompleted: 0,
   completedToday: 0,
   isLoading: false,
@@ -37,7 +37,7 @@ const currentOrdersSlice = createSlice({
       .addCase(fetchCurrentOrders.fulfilled, (state, action) => {
         state.isLoading = false;
         state.fetchError = null;
-        state.liveOrders = action.payload.orders;
+        state.currentOrders = action.payload.orders;
         state.totalCompleted = action.payload.total;
         state.completedToday = action.payload.totalToday;
       });
