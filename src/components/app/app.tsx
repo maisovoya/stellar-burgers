@@ -8,9 +8,7 @@ import {
   ProfileOrders,
   Register,
   ResetPassword,
-  IngredientDetails,
-  OrderInfo,
-  Modal
+  
 } from '@pages'; 
 
 import { useEffect } from 'react';
@@ -26,23 +24,20 @@ import { fetchInventory } from '../../services/slices/ingredientCatalogSlice';
 import '../../index.css';
 import styles from './app.module.css';
 
-import { AppHeader } from '@components';
+import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 
 const App = () => {
   const location = useLocation();
   const dispatch = useAppDispatch();
   const background = location.state?.background;
 
+  // Правильно: useSelector ВНЕ useEffect
+  const inventory = useAppSelector((state) => state.ingredientCatalog);
 
   useEffect(() => {
     dispatch(fetchCurrentUser());
     dispatch(fetchInventory());
   }, [dispatch]);
-
-  const getOrderNumber = () => {
-    const match = location.pathname.match(/\d+/);
-    return match ? match[0] : '';
-  };
 
   return (
     <div className={styles.app}>
@@ -61,7 +56,7 @@ const App = () => {
         <Route
           path='/feed/:number'
           element={
-            <CenteringComp title={`#${getOrderNumber()}`}>
+            <CenteringComp title={`#${location.pathname.match(/\d+/)}`}>
               <OrderInfo />
             </CenteringComp>
           }
@@ -78,7 +73,7 @@ const App = () => {
           <Route
             path='/profile/orders/:number'
             element={
-              <CenteringComp title={`#${getOrderNumber()}`}>
+              <CenteringComp title={`#${location.pathname.match(/\d+/)}`}>
                 <OrderInfo />
               </CenteringComp>
             }
@@ -86,6 +81,7 @@ const App = () => {
         </Route>
         <Route path='*' element={<NotFound404 />} />
       </Routes>
+
       {background && (
         <Routes>
           <Route
@@ -93,7 +89,7 @@ const App = () => {
             element={
               <Modal
                 title={'Детали ингредиента'}
-                onClose={() => window.history.back()}
+                onClose={() => history.back()}
               >
                 <IngredientDetails />
               </Modal>
@@ -103,8 +99,8 @@ const App = () => {
             path='/feed/:number'
             element={
               <Modal
-                title={`#${getOrderNumber()}`}
-                onClose={() => window.history.back()}
+                title={`#${location.pathname.match(/\d+/)}`}
+                onClose={() => history.back()}
               >
                 <OrderInfo />
               </Modal>
@@ -115,8 +111,8 @@ const App = () => {
               path='/profile/orders/:number'
               element={
                 <Modal
-                  title={`#${getOrderNumber()}`}
-                  onClose={() => window.history.back()}
+                  title={`#${location.pathname.match(/\d+/)}`}
+                  onClose={() => history.back()}
                 >
                   <OrderInfo />
                 </Modal>
