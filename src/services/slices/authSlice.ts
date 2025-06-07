@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TRegisterData, TLoginData, loginUserApi, registerUserApi, logoutApi } from '@api';
 import { setCookie, deleteCookie } from '../../utils/cookie';
 import { TUser } from '@utils-types';
+import type { RootState } from '../store';
 
 type TAuthState = {
   authError: string | null;
@@ -99,4 +100,9 @@ const authSlice = createSlice({
 });
 
 export const { clearAuthError } = authSlice.actions;
+export const selectAuthError = (state: RootState) => state.auth.authError;
+
+export const selectAuthLoading = (state: RootState) => state.auth.isLoggingIn;
+
+export const selectIsLoggedIn = (state: RootState) => state.auth.isLoggedIn;
 export default authSlice.reducer;
