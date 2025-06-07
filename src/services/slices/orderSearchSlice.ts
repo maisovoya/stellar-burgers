@@ -6,7 +6,7 @@ type TOrderSearchState = {
   allOrders: TOrder[];
   orderDetails: TOrder | null;
   isFetching: boolean;
-  rawResponse: null;  
+  rawResponse: null;
   fetchError: string | null;
 };
 
@@ -15,7 +15,7 @@ const initialState: TOrderSearchState = {
   orderDetails: null,
   isFetching: false,
   rawResponse: null,
-  fetchError: null,
+  fetchError: null
 };
 
 export const fetchOrderDetails = createAsyncThunk(
@@ -27,9 +27,9 @@ const orderSearchSlice = createSlice({
   name: 'orderSearch',
   initialState,
   reducers: {},
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder
-      .addCase(fetchOrderDetails.pending, state => {
+      .addCase(fetchOrderDetails.pending, (state) => {
         state.isFetching = true;
         state.fetchError = null;
       })
@@ -45,6 +45,8 @@ const orderSearchSlice = createSlice({
   }
 });
 
-export const selectOrderSearchState = (state: { orderSearch: TOrderSearchState }) => state.orderSearch;
+export const selectOrderSearchState = (state: {
+  orderSearch: TOrderSearchState;
+}) => state.orderSearch;
 
 export default orderSearchSlice.reducer;

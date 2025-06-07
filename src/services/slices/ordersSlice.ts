@@ -14,7 +14,10 @@ export const initialState: TOrdersState = {
   error: null
 };
 
-export const fetchUserOrders = createAsyncThunk('orders/fetchUserOrders', getOrdersApi);
+export const fetchUserOrders = createAsyncThunk(
+  'orders/fetchUserOrders',
+  getOrdersApi
+);
 
 const ordersSlice = createSlice({
   name: 'orders',
@@ -36,7 +39,5 @@ const ordersSlice = createSlice({
       });
   }
 });
-
-
 
 export default ordersSlice.reducer;

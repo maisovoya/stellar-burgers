@@ -10,7 +10,7 @@ export const BurgerIngredients: FC = () => {
   const inventoryItems = useAppSelector(
     (state) => state.ingredientCatalog.inventoryItems
   );
-  const buns = inventoryItems.filter((item) => item.type === 'bun');;
+  const buns = inventoryItems.filter((item) => item.type === 'bun');
   const mains = inventoryItems.filter((item) => item.type === 'main');
   const sauces = inventoryItems.filter((item) => item.type === 'sauce');
 
@@ -50,7 +50,6 @@ export const BurgerIngredients: FC = () => {
     if (tab === 'sauce')
       titleSaucesRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
-
 
   return (
     <BurgerIngredientsUI

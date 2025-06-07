@@ -12,7 +12,8 @@ import {
 
 export const Feed: FC = () => {
   const dispatch = useAppDispatch();
-  const { currentOrders: orders, isLoading } = useAppSelector(selectCurrentOrders);
+  const { currentOrders: orders, isLoading } =
+    useAppSelector(selectCurrentOrders);
 
   useEffect(() => {
     dispatch(fetchCurrentOrders());
@@ -24,6 +25,11 @@ export const Feed: FC = () => {
   if (!orders.length) {
     return <p>Нет заказов для отображения</p>;
   }
-  
-  return <FeedUI orders={orders} handleGetFeeds={() => dispatch(fetchCurrentOrders())} />;
+
+  return (
+    <FeedUI
+      orders={orders}
+      handleGetFeeds={() => dispatch(fetchCurrentOrders())}
+    />
+  );
 };

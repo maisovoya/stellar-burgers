@@ -1,5 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { TRegisterData, TLoginData, loginUserApi, registerUserApi, logoutApi } from '@api';
+import {
+  TRegisterData,
+  TLoginData,
+  loginUserApi,
+  registerUserApi,
+  logoutApi
+} from '@api';
 import { setCookie, deleteCookie } from '../../utils/cookie';
 import { TUser } from '@utils-types';
 import type { RootState } from '../store';
@@ -19,7 +25,7 @@ export const initialState: TAuthState = {
   hasCheckedAuth: false,
   isLoggedIn: false,
   isLoggingIn: false,
-  isLoading: false,
+  isLoading: false
 };
 
 export const registerAccount = createAsyncThunk(

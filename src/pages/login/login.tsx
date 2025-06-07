@@ -3,9 +3,12 @@ import { LoginUI } from '@ui-pages';
 import { useAppDispatch, useAppSelector } from '../../services/hooks';
 
 import { Navigate } from 'react-router-dom';
-import { loginAccount, selectAuthError, selectAuthLoading } from '../../services/slices/authSlice';
+import {
+  loginAccount,
+  selectAuthError,
+  selectAuthLoading
+} from '../../services/slices/authSlice';
 import { selectAccountState } from '../../services/slices/userSlice';
-
 
 export const Login: FC = () => {
   const [email, setEmail] = useState('');
@@ -23,9 +26,8 @@ export const Login: FC = () => {
     dispatch(loginAccount({ email, password }));
   };
 
-
   if (currentUser) {
-    return <Navigate to="/" replace />;
+    return <Navigate to='/' replace />;
   }
 
   return (

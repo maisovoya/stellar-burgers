@@ -7,9 +7,8 @@ import {
   Profile,
   ProfileOrders,
   Register,
-  ResetPassword,
-  
-} from '@pages'; 
+  ResetPassword
+} from '@pages';
 
 import { useEffect } from 'react';
 import { useLocation, Routes, Route } from 'react-router-dom';

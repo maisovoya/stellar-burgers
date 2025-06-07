@@ -16,21 +16,12 @@ export const BurgerConstructor: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-
-  const {
-    creationData,
-    orderDetails,
-    ordering,  
-    loading,
-    error
-  } = useAppSelector(selectBurgerBuilder);
-
-  
+  const { creationData, orderDetails, ordering, loading, error } =
+    useAppSelector(selectBurgerBuilder);
 
   const { currentUser } = useAppSelector(selectAccountState);
   const isLoggedIn = Boolean(currentUser);
 
- 
   let ingredientIds: string[] = [];
   const fillingIds = creationData.filling.map((item) => item._id);
 
@@ -49,11 +40,9 @@ export const BurgerConstructor: FC = () => {
     }
   };
 
-  
   const closeOrderModal = () => {
     dispatch(clearOrderDetails());
   };
-
 
   const totalPrice = useMemo(() => {
     const bunPrice = creationData.selectedBun?.price ?? 0;
@@ -68,7 +57,10 @@ export const BurgerConstructor: FC = () => {
     <BurgerConstructorUI
       price={totalPrice}
       orderRequest={ordering || loading}
-      constructorItems={[...(creationData.selectedBun ? [creationData.selectedBun] : []), ...creationData.filling]}
+      constructorItems={[
+        ...(creationData.selectedBun ? [creationData.selectedBun] : []),
+        ...creationData.filling
+      ]}
       orderModalData={orderDetails}
       onOrderClick={onOrderClick}
       closeOrderModal={closeOrderModal}

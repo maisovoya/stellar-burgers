@@ -15,16 +15,19 @@ const initialState: TCurrentOrdersState = {
   totalCompleted: 0,
   completedToday: 0,
   isLoading: false,
-  fetchError: null,
+  fetchError: null
 };
 
-export const fetchCurrentOrders = createAsyncThunk('currentOrders/fetchAll', getFeedsApi);
+export const fetchCurrentOrders = createAsyncThunk(
+  'currentOrders/fetchAll',
+  getFeedsApi
+);
 
 const currentOrdersSlice = createSlice({
   name: 'currentOrders',
   initialState,
   reducers: {},
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder
       .addCase(fetchCurrentOrders.pending, (state) => {
         state.isLoading = true;
@@ -41,10 +44,11 @@ const currentOrdersSlice = createSlice({
         state.totalCompleted = action.payload.total;
         state.completedToday = action.payload.totalToday;
       });
-  },
+  }
 });
 
-
-export const selectCurrentOrders = (state: { currentOrders: TCurrentOrdersState }) => state.currentOrders;
+export const selectCurrentOrders = (state: {
+  currentOrders: TCurrentOrdersState;
+}) => state.currentOrders;
 
 export default currentOrdersSlice.reducer;

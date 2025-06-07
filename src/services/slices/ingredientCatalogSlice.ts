@@ -12,16 +12,19 @@ type TIngredientCatalogState = {
 const initialState: TIngredientCatalogState = {
   inventoryItems: [],
   isLoading: false,
-  fetchError: null,
+  fetchError: null
 };
 
-export const fetchInventory = createAsyncThunk('inventory/fetchAll', getIngredientsApi);
+export const fetchInventory = createAsyncThunk(
+  'inventory/fetchAll',
+  getIngredientsApi
+);
 
 const inventorySlice = createSlice({
   name: 'inventory',
   initialState,
   reducers: {},
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder
       .addCase(fetchInventory.pending, (state) => {
         state.isLoading = true;
@@ -36,9 +39,10 @@ const inventorySlice = createSlice({
         state.fetchError = null;
         state.inventoryItems = action.payload;
       });
-  },
+  }
 });
 
-export const selectInventoryState = (state: RootState) => state.ingredientCatalog;
+export const selectInventoryState = (state: RootState) =>
+  state.ingredientCatalog;
 
 export default inventorySlice.reducer;

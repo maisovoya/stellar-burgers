@@ -73,5 +73,4 @@ export const Profile: FC = () => {
       handleInputChange={handleInputChange}
     />
   );
-
 };

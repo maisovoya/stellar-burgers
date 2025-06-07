@@ -1,5 +1,10 @@
 import { orderBurgerApi } from '../../utils/burger-api';
-import { PayloadAction, createAsyncThunk, createSlice, nanoid } from '@reduxjs/toolkit';
+import {
+  PayloadAction,
+  createAsyncThunk,
+  createSlice,
+  nanoid
+} from '@reduxjs/toolkit';
 import { TConstructorIngredient, TIngredient, TOrder } from '@utils-types';
 
 export type TBurgerCreationState = {
@@ -29,7 +34,11 @@ export const submitBurgerOrder = createAsyncThunk(
   async (ingredientIds: string[]) => orderBurgerApi(ingredientIds)
 );
 
-const moveItem = (array: TConstructorIngredient[], from: number, to: number) => {
+const moveItem = (
+  array: TConstructorIngredient[],
+  from: number,
+  to: number
+) => {
   if (to < 0 || to >= array.length) return;
   const item = array.splice(from, 1)[0];
   array.splice(to, 0, item);
@@ -52,7 +61,9 @@ export const burgerCreationSlice = createSlice({
       })
     },
     removeItem: (state, action: PayloadAction<string>) => {
-      state.creationData.filling = state.creationData.filling.filter(item => item.id !== action.payload);
+      state.creationData.filling = state.creationData.filling.filter(
+        (item) => item.id !== action.payload
+      );
     },
     moveItemUp: (state, action: PayloadAction<number>) => {
       moveItem(state.creationData.filling, action.payload, action.payload - 1);
@@ -64,7 +75,7 @@ export const burgerCreationSlice = createSlice({
       state.orderDetails = null;
     }
   },
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder
       .addCase(submitBurgerOrder.pending, (state) => {
         state.loading = true;
@@ -97,6 +108,8 @@ export const {
   clearOrderDetails
 } = burgerCreationSlice.actions;
 
-export const selectBurgerBuilder = (state: { burgerCreation: TBurgerCreationState }) => state.burgerCreation;
+export const selectBurgerBuilder = (state: {
+  burgerCreation: TBurgerCreationState;
+}) => state.burgerCreation;
 
 export default burgerCreationSlice.reducer;

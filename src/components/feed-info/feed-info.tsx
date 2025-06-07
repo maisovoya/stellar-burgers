@@ -3,7 +3,10 @@ import { FC, useEffect } from 'react';
 import { TOrder } from '@utils-types';
 import { FeedInfoUI } from '../ui/feed-info';
 import { useAppSelector } from '../../services/hooks';
-import { fetchCurrentOrders, selectCurrentOrders } from '../../services/slices/currentOrdersSlice';
+import {
+  fetchCurrentOrders,
+  selectCurrentOrders
+} from '../../services/slices/currentOrdersSlice';
 import { useDispatch } from '@store';
 
 const getOrders = (orders: TOrder[], status: string): number[] =>
@@ -12,21 +15,20 @@ const getOrders = (orders: TOrder[], status: string): number[] =>
     .map((item) => item.number)
     .slice(0, 20);
 
-    export const FeedInfo: FC = () => {
-      const dispatch = useDispatch();
-      
-      const {
-        currentOrders,
-        totalCompleted,
-        completedToday,
-        isLoading,
-        fetchError
-      } = useAppSelector(selectCurrentOrders);
-    
-      useEffect(() => {
-        dispatch(fetchCurrentOrders());
-      }, [dispatch]);
-    
+export const FeedInfo: FC = () => {
+  const dispatch = useDispatch();
+
+  const {
+    currentOrders,
+    totalCompleted,
+    completedToday,
+    isLoading,
+    fetchError
+  } = useAppSelector(selectCurrentOrders);
+
+  useEffect(() => {
+    dispatch(fetchCurrentOrders());
+  }, [dispatch]);
 
   const readyOrders = getOrders(currentOrders, 'done');
 
@@ -36,7 +38,7 @@ const getOrders = (orders: TOrder[], status: string): number[] =>
     totalCompleted,
     completedToday,
     isLoading,
-    fetchError,
+    fetchError
   };
   return (
     <FeedInfoUI

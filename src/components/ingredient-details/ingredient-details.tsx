@@ -4,14 +4,18 @@ import { IngredientDetailsUI } from '../ui/ingredient-details';
 import { useParams } from 'react-router-dom';
 import { useAppSelector } from '../../services/hooks';
 
-import { selectInventoryState, fetchInventory } from '../../services/slices/ingredientCatalogSlice';
+import {
+  selectInventoryState,
+  fetchInventory
+} from '../../services/slices/ingredientCatalogSlice';
 import { useDispatch } from '@store';
 
 export const IngredientDetails: FC = () => {
   const dispatch = useDispatch();
   const { id } = useParams<{ id: string }>();
 
-  const { inventoryItems, isLoading, fetchError } = useAppSelector(selectInventoryState);
+  const { inventoryItems, isLoading, fetchError } =
+    useAppSelector(selectInventoryState);
 
   useEffect(() => {
     if (inventoryItems.length === 0 && !isLoading) {
@@ -19,7 +23,9 @@ export const IngredientDetails: FC = () => {
     }
   }, [dispatch, inventoryItems.length, isLoading]);
 
-  const ingredientData = inventoryItems.find((item) => item._id === id);
+  const ingredientData = inventoryItems.find(
+    (item: { _id: string | undefined }) => item._id === id
+  );
 
   if (isLoading) {
     return <Preloader />;

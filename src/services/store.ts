@@ -7,7 +7,6 @@ import currentOrdersReducer from './slices/currentOrdersSlice';
 import ingredientCatalogReducer from './slices/ingredientCatalogSlice';
 import orderSearchReducer from './slices/orderSearchSlice';
 
-
 const rootReducer = combineReducers({
   auth: authReducer,
   user: userReducer,
@@ -18,12 +17,10 @@ const rootReducer = combineReducers({
   orderSearch: orderSearchReducer
 });
 
-
 export const store = configureStore({
   reducer: rootReducer,
   devTools: process.env.NODE_ENV !== 'production'
 });
-
 
 import {
   TypedUseSelectorHook,
@@ -33,7 +30,6 @@ import {
 
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppDispatch = typeof store.dispatch;
-
 
 export const useDispatch = () => useDispatchOriginal<AppDispatch>();
 export const useSelector: TypedUseSelectorHook<RootState> = useSelectorOriginal;

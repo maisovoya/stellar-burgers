@@ -2,20 +2,17 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getUserApi, updateUserApi, TRegisterData } from '@api';
 import { TUser } from '@utils-types';
 
-
 export type TUserState = {
   currentUser: TUser | null;
   isLoading: boolean;
   error: string | null;
 };
 
-
 export const initialState: TUserState = {
   currentUser: null,
   isLoading: false,
-  error: null,
+  error: null
 };
-
 
 export const fetchCurrentUser = createAsyncThunk('user/fetchUser', getUserApi);
 
@@ -32,7 +29,7 @@ const userSlice = createSlice({
       state.currentUser = null;
       state.error = null;
       state.isLoading = false;
-    },
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -60,13 +57,12 @@ const userSlice = createSlice({
         state.isLoading = false;
         state.currentUser = action.payload.user;
       });
-  },
+  }
 });
 
 export const { clearUserData } = userSlice.actions;
 
-
-import type { RootState } from '../store'; 
+import type { RootState } from '../store';
 
 export const selectAccountState = (state: RootState) => state.user;
 
