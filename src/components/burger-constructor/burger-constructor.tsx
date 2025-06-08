@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   selectBurgerBuilder,
   submitBurgerOrder,
+  toggleOrderRequest,
   clearOrderDetails
 } from '../../services/slices/burgerCreationSlice';
 
@@ -36,11 +37,13 @@ export const BurgerConstructor: FC = () => {
       return;
     }
     if (creationData.selectedBun) {
+      dispatch(toggleOrderRequest(true));
       dispatch(submitBurgerOrder(ingredientIds));
     }
   };
 
   const closeOrderModal = () => {
+    dispatch(toggleOrderRequest(false));
     dispatch(clearOrderDetails());
   };
 

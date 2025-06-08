@@ -19,7 +19,7 @@ const initialState: TCurrentOrdersState = {
 };
 
 export const fetchCurrentOrders = createAsyncThunk(
-  'currentOrders/fetchAll',
+  'fetchOrders/fetchAll',
   getFeedsApi
 );
 
