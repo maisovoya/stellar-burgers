@@ -7,7 +7,7 @@ import {
   fetchCurrentOrders,
   selectCurrentOrders
 } from '../../services/slices/currentOrdersSlice';
-import { useDispatch } from '@store';
+import { useAppDispatch } from '../../services/hooks';
 
 const getOrders = (orders: TOrder[], status: string): number[] =>
   orders
@@ -16,7 +16,7 @@ const getOrders = (orders: TOrder[], status: string): number[] =>
     .slice(0, 20);
 
 export const FeedInfo: FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const {
     currentOrders,

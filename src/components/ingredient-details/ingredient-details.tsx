@@ -8,10 +8,10 @@ import {
   selectInventoryState,
   fetchInventory
 } from '../../services/slices/ingredientCatalogSlice';
-import { useDispatch } from '@store';
+import { useAppDispatch } from '../../services/hooks';
 
 export const IngredientDetails: FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { id } = useParams<{ id: string }>();
 
   const { inventoryItems, isLoading, fetchError } =

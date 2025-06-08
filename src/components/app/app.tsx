@@ -15,7 +15,7 @@ import { useLocation, Routes, Route } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../services/hooks';
 import { ProtectRoute } from '../protect-route/protect-route';
-import { CenteringComp } from '../center-component/center-component';
+import { CenteringComp } from '../centering-comp/centering-comp';
 
 import { fetchCurrentUser } from '../../services/slices/userSlice';
 import { fetchInventory } from '../../services/slices/ingredientCatalogSlice';
@@ -30,8 +30,9 @@ const App = () => {
   const dispatch = useAppDispatch();
   const background = location.state?.background;
 
-  // Правильно: useSelector ВНЕ useEffect
-  const inventory = useAppSelector((state) => state.ingredientCatalog);
+  //const inventoryItems = useAppSelector((state) => state.ingredientCatalog);
+
+  
 
   useEffect(() => {
     dispatch(fetchCurrentUser());

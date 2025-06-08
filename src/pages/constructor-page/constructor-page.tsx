@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { useSelector } from '../../services/store';
+import { useAppSelector } from '../../services/hooks';
 import styles from './constructor-page.module.css';
 
 import { BurgerIngredients } from '../../components';
@@ -9,7 +9,8 @@ import { Preloader } from '../../components/ui';
 import { selectInventoryState } from '../../services/slices/ingredientCatalogSlice';
 
 export const ConstructorPage: FC = () => {
-  const { isLoading: isIngredientsLoading } = useSelector(selectInventoryState);
+  const { isLoading: isIngredientsLoading } =
+    useAppSelector(selectInventoryState);
 
   return (
     <>
