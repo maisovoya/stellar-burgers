@@ -71,6 +71,9 @@ export const burgerCreationSlice = createSlice({
     moveItemDown: (state, action: PayloadAction<number>) => {
       moveItem(state.creationData.filling, action.payload, action.payload + 1);
     },
+    toggleOrderRequest: (state, action) => {
+      state.ordering = action.payload;
+    },
     clearOrderDetails: (state) => {
       state.orderDetails = null;
     }
@@ -101,6 +104,7 @@ export const burgerCreationSlice = createSlice({
 });
 
 export const {
+  toggleOrderRequest,
   addItem,
   removeItem,
   moveItemUp,

@@ -26,20 +26,26 @@ export const FeedInfo: FC = () => {
     fetchError
   } = useAppSelector(selectCurrentOrders);
 
-  useEffect(() => {
-    dispatch(fetchCurrentOrders());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchCurrentOrders());
+  // }, [dispatch]);
 
   const readyOrders = getOrders(currentOrders, 'done');
 
   const pendingOrders = getOrders(currentOrders, 'pending');
 
+  // const feed = {
+  //   totalCompleted,
+  //   completedToday,
+  //   isLoading,
+  //   fetchError
+  // };
   const feed = {
-    totalCompleted,
-    completedToday,
-    isLoading,
-    fetchError
+    totalToday: completedToday,
+    total: totalCompleted,
+    orders: currentOrders
   };
+
   return (
     <FeedInfoUI
       readyOrders={readyOrders}

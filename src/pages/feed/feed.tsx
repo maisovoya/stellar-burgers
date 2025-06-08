@@ -2,7 +2,7 @@ import { Preloader } from '@ui';
 import { FeedUI } from '@ui-pages';
 import { TOrder } from '@utils-types';
 
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '../../services/hooks';
 
 import {
@@ -12,24 +12,29 @@ import {
 
 export const Feed: FC = () => {
   const dispatch = useAppDispatch();
-  const { currentOrders: orders, isLoading } =
-    useAppSelector(selectCurrentOrders);
+  const {
+    currentOrders: orders,
+    isLoading,
+    fetchError
+  } = useAppSelector(selectCurrentOrders);
 
   useEffect(() => {
     dispatch(fetchCurrentOrders());
   }, [dispatch]);
 
+  const handleGetFeeds = useCallback(() => {
+    if (!isLoading) {
+      dispatch(fetchCurrentOrders());
+    }
+  }, [dispatch, isLoading]);
+
   if (isLoading) {
     return <Preloader />;
   }
-  if (!orders.length) {
-    return <p>Нет заказов для отображения</p>;
+
+  if (fetchError) {
+    return <div>Error: {fetchError}</div>;
   }
 
-  return (
-    <FeedUI
-      orders={orders}
-      handleGetFeeds={() => dispatch(fetchCurrentOrders())}
-    />
-  );
+  return <FeedUI orders={orders} handleGetFeeds={handleGetFeeds} />;
 };
