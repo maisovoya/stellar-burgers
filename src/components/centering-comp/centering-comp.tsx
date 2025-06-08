@@ -1,5 +1,5 @@
 import { FC, memo, useEffect, useState } from 'react';
-import { CenterComp } from '../ui/center-component';
+import { CenterComp } from '../ui/centering-comp';
 import { TCenter } from './type';
 import { useLocation } from 'react-router-dom';
 

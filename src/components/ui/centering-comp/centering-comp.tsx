@@ -1,6 +1,6 @@
 import { FC, memo } from 'react';
 import { TCenterComponent } from './type';
-import styles from './center-component.module.css';
+import styles from './centering-comp.module.css';
 
 export const CenterComp: FC<TCenterComponent> = memo(
   ({ title, titleStyle, children }) => (
