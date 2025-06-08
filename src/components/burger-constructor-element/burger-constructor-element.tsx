@@ -3,9 +3,9 @@ import { BurgerConstructorElementUI } from '@ui';
 import { BurgerConstructorElementProps } from './type';
 import { useDispatch } from 'react-redux';
 import {
-  removeItem,
   moveItemUp,
-  moveItemDown
+  moveItemDown,
+  removeItem
 } from '../../services/slices/burgerCreationSlice';
 
 export const BurgerConstructorElement: FC<BurgerConstructorElementProps> = memo(

@@ -32,8 +32,6 @@ const App = () => {
 
   //const inventoryItems = useAppSelector((state) => state.ingredientCatalog);
 
-  
-
   useEffect(() => {
     dispatch(fetchCurrentUser());
     dispatch(fetchInventory());

@@ -40,4 +40,4 @@ export const Login: FC = () => {
       handleSubmit={handleSubmit}
     />
   );
-  };
+};
