@@ -68,11 +68,11 @@ Cypress.Commands.add('clearAuthTokens', () => {
 // @describe: Работа с фикстурами ингредиентов
 
 // Получить список ингредиентов по типу из фикстуры
-Cypress.Commands.add('getIngredientFixtureData', (type) => {
-  return cy.fixture(INGREDIENTS_FIXTURE).then(({ data }) => {
+Cypress.Commands.add('getIngredientFixtureData', (type) =>
+  cy.fixture(INGREDIENTS_FIXTURE).then(({ data }) => {
     if (type) {
       return data.filter((item) => item.type === type);
     }
     return data;
-  });
-});
+  })
+);

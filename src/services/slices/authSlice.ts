@@ -5,7 +5,7 @@ import {
   loginUserApi,
   registerUserApi,
   logoutApi
-} from '@api';
+} from '../../utils/burger-api';;
 import { setCookie, deleteCookie } from '../../utils/cookie';
 import { TUser } from '@utils-types';
 import type { RootState } from '../store';

@@ -37,6 +37,8 @@ npm run start
 
 * `npm run start` — запуск
 * `npm run lint` — проверка кода
+* `npm run cypress` — запуск Cypress GUIAdd commentMore actions
+* `npm run test` — запуск юнит-тестов
 
 ---
 
