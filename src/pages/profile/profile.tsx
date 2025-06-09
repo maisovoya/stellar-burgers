@@ -9,9 +9,8 @@ import {
 import { Preloader } from '@ui';
 
 export const Profile: FC = () => {
+  const { currentUser, isLoading } = useAppSelector(selectAccountState);
   const dispatch = useAppDispatch();
-
-  const { currentUser: user, isLoading } = useAppSelector(selectAccountState);
 
   const [formValue, setFormValue] = useState({
     name: '',
@@ -20,35 +19,36 @@ export const Profile: FC = () => {
   });
 
   useEffect(() => {
-    if (user) {
-      setFormValue({
-        name: user.name || '',
-        email: user.email || '',
-        password: ''
-      });
-    }
-  }, [user]);
-
-  useEffect(() => {
-    if (!user) {
+    if (!currentUser) {
       dispatch(fetchCurrentUser());
     }
-  }, [dispatch, user]);
+  }, [dispatch, currentUser]);
+
+  useEffect(() => {
+    if (currentUser) {
+      setFormValue((prevState) => ({
+        ...prevState,
+        name: currentUser.name || '',
+        email: currentUser.email || ''
+      }));
+    }
+  }, [currentUser]);
 
   const isFormChanged =
-    formValue.name !== user?.name ||
-    formValue.email !== user?.email ||
+    formValue.name !== currentUser?.name ||
+    formValue.email !== currentUser?.email ||
     !!formValue.password;
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
+    dispatch(updateAccountInfo(formValue));
   };
 
   const handleCancel = (e: SyntheticEvent) => {
     e.preventDefault();
     setFormValue({
-      name: user?.name || '',
-      email: user?.email || '',
+      name: currentUser?.name || '',
+      email: currentUser?.email || '',
       password: ''
     });
   };
@@ -60,7 +60,7 @@ export const Profile: FC = () => {
     }));
   };
 
-  if (isLoading) {
+  if (isLoading && !currentUser) {
     return <Preloader />;
   }
 

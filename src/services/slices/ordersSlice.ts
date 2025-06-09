@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import type { RootState } from '../store';
 import { getOrdersApi } from '@api';
 import { TOrder } from '@utils-types';
 
@@ -41,3 +42,4 @@ const ordersSlice = createSlice({
 });
 
 export default ordersSlice.reducer;
+export const selectOrdersState = (state: RootState) => state.orders;

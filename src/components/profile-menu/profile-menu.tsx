@@ -10,9 +10,15 @@ export const ProfileMenu: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    dispatch(logoutAccount());
-    navigate('/');
+  const handleLogout = async () => {
+    try {
+      await dispatch(logoutAccount()).unwrap();
+      localStorage.removeItem('refreshToken');
+      document.cookie = 'accessToken=; Max-Age=0; path=/;';
+      navigate('/login');
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
   };
 
   return <ProfileMenuUI handleLogout={handleLogout} pathname={pathname} />;

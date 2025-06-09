@@ -24,16 +24,24 @@ import '../../index.css';
 import styles from './app.module.css';
 
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
+import { getCookie } from '../../utils/cookie';
+import { logoutAccount } from '../../services/slices/authSlice';
 
 const App = () => {
   const location = useLocation();
   const dispatch = useAppDispatch();
   const background = location.state?.background;
 
-  //const inventoryItems = useAppSelector((state) => state.ingredientCatalog);
-
   useEffect(() => {
-    dispatch(fetchCurrentUser());
+    const accessToken = getCookie('accessToken');
+    if (accessToken) {
+      dispatch(fetchCurrentUser())
+        .unwrap()
+        .catch(() => {
+          // Очищаем данные при ошибке авторизации
+          dispatch(logoutAccount());
+        });
+    }
     dispatch(fetchInventory());
   }, [dispatch]);
 
