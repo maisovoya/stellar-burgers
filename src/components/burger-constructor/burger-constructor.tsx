@@ -59,11 +59,8 @@ export const BurgerConstructor: FC = () => {
   return (
     <BurgerConstructorUI
       price={totalPrice}
-      orderRequest={ordering || loading}
-      constructorItems={[
-        ...(creationData.selectedBun ? [creationData.selectedBun] : []),
-        ...creationData.filling
-      ]}
+      orderRequest={ordering}
+      constructorItems={creationData}
       orderModalData={orderDetails}
       onOrderClick={onOrderClick}
       closeOrderModal={closeOrderModal}

@@ -34,12 +34,6 @@ export const FeedInfo: FC = () => {
 
   const pendingOrders = getOrders(currentOrders, 'pending');
 
-  // const feed = {
-  //   totalCompleted,
-  //   completedToday,
-  //   isLoading,
-  //   fetchError
-  // };
   const feed = {
     totalToday: completedToday,
     total: totalCompleted,
