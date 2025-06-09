@@ -3,19 +3,19 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TOrder } from '@utils-types';
 
 type TCurrentOrdersState = {
-  currentOrders: TOrder[];
   totalCompleted: number;
   completedToday: number;
   isLoading: boolean;
   fetchError: string | null;
+  currentOrders: TOrder[];
 };
 
 const initialState: TCurrentOrdersState = {
-  currentOrders: [],
   totalCompleted: 0,
   completedToday: 0,
   isLoading: false,
-  fetchError: null
+  fetchError: null,
+  currentOrders: []
 };
 
 export const fetchCurrentOrders = createAsyncThunk(
@@ -29,13 +29,13 @@ const currentOrdersSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchCurrentOrders.pending, (state) => {
-        state.isLoading = true;
-        state.fetchError = null;
-      })
       .addCase(fetchCurrentOrders.rejected, (state, action) => {
         state.isLoading = false;
         state.fetchError = action.error.message ?? 'Failed to fetch orders';
+      })
+      .addCase(fetchCurrentOrders.pending, (state) => {
+        state.isLoading = true;
+        state.fetchError = null;
       })
       .addCase(fetchCurrentOrders.fulfilled, (state, action) => {
         state.isLoading = false;

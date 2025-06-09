@@ -19,25 +19,20 @@ export const FeedInfo: FC = () => {
   const dispatch = useAppDispatch();
 
   const {
+    isLoading,
+    fetchError,
     currentOrders,
     totalCompleted,
-    completedToday,
-    isLoading,
-    fetchError
+    completedToday
   } = useAppSelector(selectCurrentOrders);
 
-  // useEffect(() => {
-  //   dispatch(fetchCurrentOrders());
-  // }, [dispatch]);
-
   const readyOrders = getOrders(currentOrders, 'done');
-
   const pendingOrders = getOrders(currentOrders, 'pending');
 
   const feed = {
-    totalToday: completedToday,
+    orders: currentOrders,
     total: totalCompleted,
-    orders: currentOrders
+    totalToday: completedToday
   };
 
   return (

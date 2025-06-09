@@ -26,13 +26,13 @@ const inventorySlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchInventory.pending, (state) => {
-        state.isLoading = true;
-        state.fetchError = null;
-      })
       .addCase(fetchInventory.rejected, (state, action) => {
         state.isLoading = false;
         state.fetchError = action.error.message ?? 'Failed to fetch inventory';
+      })
+      .addCase(fetchInventory.pending, (state) => {
+        state.isLoading = true;
+        state.fetchError = null;
       })
       .addCase(fetchInventory.fulfilled, (state, action) => {
         state.isLoading = false;

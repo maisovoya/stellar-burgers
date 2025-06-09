@@ -6,8 +6,8 @@ import { FC, useEffect, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '../../services/hooks';
 
 import {
-  selectCurrentOrders,
-  fetchCurrentOrders
+  fetchCurrentOrders,
+  selectCurrentOrders
 } from '../../services/slices/currentOrdersSlice';
 
 export const Feed: FC = () => {

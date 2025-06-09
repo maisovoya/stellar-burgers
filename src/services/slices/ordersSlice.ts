@@ -4,15 +4,15 @@ import { getOrdersApi } from '@api';
 import { TOrder } from '@utils-types';
 
 type TOrdersState = {
-  personalOrders: TOrder[];
   isLoading: boolean;
   error: string | null;
+  personalOrders: TOrder[];
 };
 
 export const initialState: TOrdersState = {
-  personalOrders: [],
   isLoading: false,
-  error: null
+  error: null,
+  personalOrders: []
 };
 
 export const fetchUserOrders = createAsyncThunk(
@@ -26,13 +26,13 @@ const ordersSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchUserOrders.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
       .addCase(fetchUserOrders.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message ?? 'Failed to fetch orders';
+      })
+      .addCase(fetchUserOrders.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
       })
       .addCase(fetchUserOrders.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -41,5 +41,5 @@ const ordersSlice = createSlice({
   }
 });
 
-export default ordersSlice.reducer;
 export const selectOrdersState = (state: RootState) => state.orders;
+export default ordersSlice.reducer;

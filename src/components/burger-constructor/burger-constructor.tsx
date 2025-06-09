@@ -5,17 +5,17 @@ import { useAppDispatch, useAppSelector } from '../../services/hooks';
 import { useNavigate } from 'react-router-dom';
 
 import {
+  clearOrderDetails,
   selectBurgerBuilder,
-  submitBurgerOrder,
   toggleOrderRequest,
-  clearOrderDetails
+  submitBurgerOrder
 } from '../../services/slices/burgerCreationSlice';
 
 import { selectAccountState } from '../../services/slices/userSlice';
 
 export const BurgerConstructor: FC = () => {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const { creationData, orderDetails, ordering, loading, error } =
     useAppSelector(selectBurgerBuilder);
@@ -23,8 +23,8 @@ export const BurgerConstructor: FC = () => {
   const { currentUser } = useAppSelector(selectAccountState);
   const isLoggedIn = Boolean(currentUser);
 
-  let ingredientIds: string[] = [];
   const fillingIds = creationData.filling.map((item) => item._id);
+  let ingredientIds: string[] = [];
 
   if (creationData.selectedBun) {
     const bunId = creationData.selectedBun._id;
