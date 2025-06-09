@@ -10,8 +10,8 @@ import {
 import { NavLink, useLocation } from 'react-router-dom';
 
 export const AppHeaderUI: FC<TAppHeaderUIProps> = ({ userName }) => {
-  const pathname = useLocation().pathname;
   const isAuthorized = Boolean(userName);
+  const pathname = useLocation().pathname;
   const isConstructorPage = pathname.includes('/ingredients');
   const constructorLink = isConstructorPage ? pathname : '/';
 

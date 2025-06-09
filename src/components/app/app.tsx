@@ -17,7 +17,7 @@ import { useAppDispatch, useAppSelector } from '../../services/hooks';
 import { ProtectRoute } from '../protect-route/protect-route';
 import { CenteringComp } from '../centering-comp/centering-comp';
 
-import { fetchCurrentUser } from '../../services/slices/userSlice';
+import { currentUserFetch } from '../../services/slices/userSlice';
 import { fetchInventory } from '../../services/slices/ingredientCatalogSlice';
 
 import '../../index.css';
@@ -32,16 +32,10 @@ const App = () => {
   const dispatch = useAppDispatch();
   const background = location.state?.background;
 
+  const inventory = useAppSelector((state) => state.ingredientCatalog);
+
   useEffect(() => {
-    const accessToken = getCookie('accessToken');
-    if (accessToken) {
-      dispatch(fetchCurrentUser())
-        .unwrap()
-        .catch(() => {
-          // Очищаем данные при ошибке авторизации
-          dispatch(logoutAccount());
-        });
-    }
+    dispatch(currentUserFetch());
     dispatch(fetchInventory());
   }, [dispatch]);
 

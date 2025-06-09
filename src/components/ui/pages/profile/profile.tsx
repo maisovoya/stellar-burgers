@@ -8,12 +8,12 @@ import { ProfileUIProps } from './type';
 import { ProfileMenu } from '@components';
 
 export const ProfileUI: FC<ProfileUIProps> = ({
-  formValue,
-  isFormChanged,
-  updateUserError,
   handleSubmit,
+  formValue,
   handleCancel,
-  handleInputChange
+  handleInputChange,
+  isFormChanged,
+  updateUserError
 }) => (
   <main className={`${commonStyles.container}`}>
     <div className={`mt-30 mr-15 ${styles.menu}`}>

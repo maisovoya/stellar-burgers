@@ -80,15 +80,15 @@ export const burgerCreationSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(submitBurgerOrder.pending, (state) => {
-        state.loading = true;
-        state.ordering = true;
-        state.error = null;
-      })
       .addCase(submitBurgerOrder.rejected, (state, action) => {
         state.loading = false;
         state.ordering = false;
         state.error = action.error.message ?? 'Order failed';
+      })
+      .addCase(submitBurgerOrder.pending, (state) => {
+        state.loading = true;
+        state.ordering = true;
+        state.error = null;
       })
       .addCase(submitBurgerOrder.fulfilled, (state, action) => {
         state.loading = false;

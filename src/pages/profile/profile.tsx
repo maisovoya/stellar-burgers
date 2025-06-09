@@ -2,9 +2,9 @@ import { ProfileUI } from '@ui-pages';
 import { FC, SyntheticEvent, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../services/hooks';
 import {
-  fetchCurrentUser,
+  currentUserFetch,
   selectAccountState,
-  updateAccountInfo
+  accountUpdateInfo
 } from '../../services/slices/userSlice';
 import { Preloader } from '@ui';
 
@@ -13,14 +13,14 @@ export const Profile: FC = () => {
   const dispatch = useAppDispatch();
 
   const [formValue, setFormValue] = useState({
-    name: '',
     email: '',
+    name: '',
     password: ''
   });
 
   useEffect(() => {
     if (!currentUser) {
-      dispatch(fetchCurrentUser());
+      dispatch(currentUserFetch());
     }
   }, [dispatch, currentUser]);
 
@@ -29,7 +29,8 @@ export const Profile: FC = () => {
       setFormValue((prevState) => ({
         ...prevState,
         name: currentUser.name || '',
-        email: currentUser.email || ''
+        email: currentUser.email || '',
+        password: ''
       }));
     }
   }, [currentUser]);
@@ -41,7 +42,7 @@ export const Profile: FC = () => {
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    dispatch(updateAccountInfo(formValue));
+    dispatch(accountUpdateInfo(formValue));
   };
 
   const handleCancel = (e: SyntheticEvent) => {

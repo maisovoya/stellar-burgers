@@ -1,33 +1,32 @@
 import { FC, SyntheticEvent, useState } from 'react';
+
 import { LoginUI } from '@ui-pages';
 import { useAppDispatch, useAppSelector } from '../../services/hooks';
 
 import { Navigate } from 'react-router-dom';
 import {
-  loginAccount,
   selectAuthError,
-  selectAuthLoading
-} from '../../services/slices/authSlice';
-import { selectAccountState } from '../../services/slices/userSlice';
+  selectAccountState,
+  accountLogin
+} from '../../services/slices/userSlice';
 
 export const Login: FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const dispatch = useAppDispatch();
-
   const error = useAppSelector(selectAuthError);
-  const isLoggingIn = useAppSelector(selectAuthLoading);
-  const { currentUser } = useAppSelector(selectAccountState);
+  const { isLoggedIn } = useAppSelector(selectAccountState);
+
+  const dispatch = useAppDispatch();
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     if (!email || !password) return;
-    dispatch(loginAccount({ email, password }));
+    dispatch(accountLogin({ email, password }));
   };
 
-  if (currentUser) {
-    return <Navigate to='/' replace />;
+  if (isLoggedIn) {
+    return <Navigate to='/' />;
   }
 
   return (
