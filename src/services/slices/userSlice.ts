@@ -38,13 +38,25 @@ export const initialState: TStateAccount = {
 
 export const accountLogin = createAsyncThunk(
   'account/login',
-  async ({ email, password }: TLoginData) => {
+  async ({ email, password }: TLoginData, thunkAPI) => {
     const result = await loginUserApi({ email, password });
+
     if (!result.success) {
-      return result;
+      return thunkAPI.rejectWithValue(result);
     }
+
+    // Сохраняем токены
     setCookie('accessToken', result.accessToken);
     localStorage.setItem('refreshToken', result.refreshToken);
+
+    // Загрузка текущего пользователя
+    const userRes = await getUserApi();
+
+    if (userRes.success) {
+      // Обновляем Redux
+      thunkAPI.dispatch(setUser(userRes.user));
+    }
+
     return result;
   }
 );
@@ -84,6 +96,11 @@ export const userSlice = createSlice({
     },
     clearAuthError: (state) => {
       state.authError = null;
+    },
+    setUser: (state, action: { payload: TUser }) => {
+      state.currentUser = action.payload;
+      state.isLoggedIn = true;
+      state.hasCheckedAuth = false;
     }
   },
   selectors: {
@@ -128,9 +145,7 @@ export const userSlice = createSlice({
         state.authError = null;
         state.isLoggedIn = true;
       })
-      .addCase(accountLogin.fulfilled, (state, action) => {
-        state.currentUser = null;
-        state.hasCheckedAuth = false;
+      .addCase(accountLogin.fulfilled, (state) => {
         state.isLoggingIn = false;
         state.isLoggedIn = true;
         state.authError = null;
@@ -195,6 +210,6 @@ export const userSlice = createSlice({
   }
 });
 
-export const { clearUserData, clearAuthError } = userSlice.actions;
+export const { clearUserData, clearAuthError, setUser } = userSlice.actions;
 export const { selectAccountState, selectAuthError } = userSlice.selectors;
 export default userSlice.reducer;

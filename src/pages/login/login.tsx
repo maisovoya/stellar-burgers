@@ -1,9 +1,9 @@
-import { FC, SyntheticEvent, useState } from 'react';
+import { FC, SyntheticEvent, useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import { LoginUI } from '@ui-pages';
 import { useAppDispatch, useAppSelector } from '../../services/hooks';
 
-import { Navigate } from 'react-router-dom';
 import {
   selectAuthError,
   selectAccountState,
@@ -18,6 +18,8 @@ export const Login: FC = () => {
   const { isLoggedIn } = useAppSelector(selectAccountState);
 
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
@@ -25,9 +27,12 @@ export const Login: FC = () => {
     dispatch(accountLogin({ email, password }));
   };
 
-  if (isLoggedIn) {
-    return <Navigate to='/' />;
-  }
+  useEffect(() => {
+    if (isLoggedIn) {
+      const from = location.state?.from?.pathname || '/';
+      navigate(from, { replace: true });
+    }
+  }, [isLoggedIn, navigate, location]);
 
   return (
     <LoginUI
