@@ -14,6 +14,10 @@ export const ProtectRoute = ({ onlyUnAuth }: ProtectRouteProps) => {
   const { currentUser, hasCheckedAuth, isLoggedIn } =
     useAppSelector(selectAccountState);
 
+  if (hasCheckedAuth) {
+    return <Preloader />;
+  }
+
   if (!onlyUnAuth && !isLoggedIn) {
     return <Navigate replace to='/login' state={{ from: location }} />;
   }
@@ -21,10 +25,6 @@ export const ProtectRoute = ({ onlyUnAuth }: ProtectRouteProps) => {
   if (onlyUnAuth && isLoggedIn) {
     const from = location.state?.from || { pathname: '/' };
     return <Navigate replace to={from} />;
-  }
-
-  if (hasCheckedAuth) {
-    return <Preloader />;
   }
 
   return <Outlet />;

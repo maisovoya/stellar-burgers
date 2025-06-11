@@ -101,6 +101,8 @@ const authSlice = createSlice({
         state.authError = null;
         state.authResponse = null;
         state.hasCheckedAuth = false;
+        state.isLoading = false;
+        state.isLoggingIn = false;
       });
   }
 });
