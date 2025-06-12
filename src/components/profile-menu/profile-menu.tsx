@@ -1,24 +1,3 @@
-<<<<<<< HEAD
-import { FC } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { ProfileMenuUI } from '@ui';
-import { useAppDispatch } from '../../services/hooks';
-
-import { logoutAccount } from '../../services/slices/authSlice';
-
-export const ProfileMenu: FC = () => {
-  const { pathname } = useLocation();
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    dispatch(logoutAccount());
-    navigate('/');
-  };
-
-  return <ProfileMenuUI handleLogout={handleLogout} pathname={pathname} />;
-};
-=======
 import { FC } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ProfileMenuUI } from '@ui';
@@ -39,4 +18,3 @@ export const ProfileMenu: FC = () => {
 
   return <ProfileMenuUI handleLogout={handleLogout} pathname={pathname} />;
 };
->>>>>>> review-an
