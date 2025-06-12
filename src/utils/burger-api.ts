@@ -6,14 +6,14 @@ const URL = process.env.BURGER_API_URL;
 const checkResponse = <T>(res: Response): Promise<T> =>
   res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 
-type TServerResponse<T> = {
-  success: boolean;
-} & T;
-
 type TRefreshResponse = TServerResponse<{
   refreshToken: string;
   accessToken: string;
 }>;
+
+type TServerResponse<T> = {
+  success: boolean;
+} & T;
 
 export const refreshToken = (): Promise<TRefreshResponse> =>
   fetch(`${URL}/auth/token`, {
@@ -57,10 +57,6 @@ export const fetchWithRefresh = async <T>(
   }
 };
 
-type TIngredientsResponse = TServerResponse<{
-  data: TIngredient[];
-}>;
-
 type TFeedsResponse = TServerResponse<{
   orders: TOrder[];
   total: number;
@@ -69,6 +65,10 @@ type TFeedsResponse = TServerResponse<{
 
 type TOrdersResponse = TServerResponse<{
   data: TOrder[];
+}>;
+
+type TIngredientsResponse = TServerResponse<{
+  data: TIngredient[];
 }>;
 
 export const getIngredientsApi = () =>
@@ -137,7 +137,7 @@ export type TRegisterData = {
   password: string;
 };
 
-type TAuthResponse = TServerResponse<{
+export type TAuthResponse = TServerResponse<{
   refreshToken: string;
   accessToken: string;
   user: TUser;

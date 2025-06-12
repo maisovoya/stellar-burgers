@@ -1,19 +1,49 @@
-# Проектная работа 11-го спринта
+# Stellar Burger
 
-[Макет](<https://www.figma.com/file/vIywAvqfkOIRWGOkfOnReY/React-Fullstack_-Проектные-задачи-(3-месяца)_external_link?type=design&node-id=0-1&mode=design>)
+Привет! Это **Stellar Burger** — SPA-приложение для сборки и заказа бургеров.
 
-[Чеклист](https://www.notion.so/praktikum/0527c10b723d4873aa75686bad54b32e?pvs=4)
+---
 
-## Этапы работы:
+## Что умеет?
 
-1. Разверните проект и ознакомьтесь с кодом. Все необходимые вам компоненты уже созданы и лежат в папке `src/components`
+* Собирай бургеры с drag & drop
+* Смотри детали ингредиентов в модальных окнах
+* Оформи заказ быстро и удобно
+* Регистрация, вход и выход с защитой через JWT
+* Личный кабинет с историей заказов
+* Живая лента заказов через WebSocket
+* Тесты: Jest для логики, Cypress для сценариев
 
-2. Настройте роутинг.
+---
 
-3. Напишите функционал запросов данных с сервера, используя `Redux` и глобальный `store`. Сами "ручки" уже прописаны и лежат в `utils/burger-api.ts`
+## Технологии
 
-4. Настройте авторизацию и создайте защищённые роуты.
+React, Redux Toolkit, TypeScript, React Router v6, Webpack, Jest, Cypress, UI-компоненты @zlden/react-developer-burger-ui-components
 
-## Важно:
+---
 
-Для корректной работы запросов к серверу необходимо добавить переменную BURGER_API_URL в окружение. Сама ссылка находится в файле `.env.example`.
+## Установка и запуск
+
+```bash
+git clone https://github.com/maisovoya/stellar-burger.git
+cd stellar-burger
+npm install
+npm run start
+```
+
+---
+
+## Скрипты
+
+* `npm run start` — запуск
+* `npm run lint` — проверка кода
+* `npm run cypress` — запуск Cypress GUIAdd commentMore actions
+* `npm run test` — запуск юнит-тестов
+
+---
+
+## Об авторе
+
+**maisovoya**
+
+GitHub: [https://github.com/maisovoya](https://github.com/maisovoya)
