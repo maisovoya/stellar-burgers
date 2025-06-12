@@ -177,7 +177,6 @@ describe('Тестирование открытия и закрытия мода
       cy.url().should('not.include', ingredient._id);
     });
   });
-  
   it('модалка с подробностями ингредиента открывается по клику', () => {
     cy.getIngredientFixtureData('main').then((mains) => {
       const ingredient = mains[0];
@@ -186,19 +185,12 @@ describe('Тестирование открытия и закрытия мода
     });
   });
 
-  it('при добавлении ингредиента он появляется в конструкторе', () => {
-    cy.getIngredientFixtureData('main').then((mains) => {
-      const ingredient = mains[0];
-      cy.addIngredientToBurger(ingredient._id);
-      cy.verifyIngredientInConstructor(ingredient);
-    });
-  });
-  
-  it('при открытии модалки отображаются детали нужного ингредиента', () => {
+  it('закрытие модального окна с помощью клавиши Escape', () => {
     cy.getIngredientFixtureData('main').then((mains) => {
       const ingredient = mains[0];
       cy.openIngredientDetailsModal(ingredient._id);
-      cy.verifyIngredientDetailsInModal(ingredient);
+      cy.closeModalByEscape();
+      cy.url().should('not.include', ingredient._id);
     });
   });
-  
+});

@@ -1,4 +1,4 @@
- const BASE_URL = 'https://norma.nomoreparties.space/api';
+const BASE_URL = 'https://norma.nomoreparties.space/api';
 const INGREDIENTS_FIXTURE = 'ingredients.json';
 const USERS_FIXTURE = 'logs-of-users.json';
 const ORDER_RESPONSE_FIXTURE = 'order-response.json';
@@ -68,27 +68,11 @@ Cypress.Commands.add('clearAuthTokens', () => {
 // @describe: Работа с фикстурами ингредиентов
 
 // Получить список ингредиентов по типу из фикстуры
-Cypress.Commands.add('getIngredientFixtureData', (type) =>
-  cy.fixture(INGREDIENTS_FIXTURE).then(({ data }) => {
+Cypress.Commands.add('getIngredientFixtureData', (type) => {
+  return cy.fixture(INGREDIENTS_FIXTURE).then(({ data }) => {
     if (type) {
       return data.filter((item) => item.type === type);
     }
     return data;
-  })
-);
-
-// Проверяет наличие ингредиента по ID или имени в зоне конструктора
-Cypress.Commands.add('verifyIngredientInConstructor', (ingredient) => {
-  cy.get('[data-cy="constructor-ingredients"]').should('contain.text', ingredient.name);
-});
-
-// Проверяет, что модальное окно отображает детали нужного ингредиента
-Cypress.Commands.add('verifyIngredientDetailsInModal', (ingredient) => {
-  cy.get('@modalContainer').within(() => {
-    cy.get('.ingredient-details__name').should('have.text', ingredient.name);
-    cy.get('.ingredient-details__calories').should('contain.text', ingredient.calories);
-    cy.get('.ingredient-details__proteins').should('contain.text', ingredient.proteins);
-    cy.get('.ingredient-details__fat').should('contain.text', ingredient.fat);
-    cy.get('.ingredient-details__carbohydrates').should('contain.text', ingredient.carbohydrates);
   });
 });

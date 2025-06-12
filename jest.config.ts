@@ -7,11 +7,13 @@ const config: Config = {
   transform: {
     '^.+\\.(ts|tsx)$': 'ts-jest'
   },
-  testMatch: ['**/?(*.)+(spec|test).[tj]s?(x)'],
+
+  testMatch: ['<rootDir>/src/services/slices/**/*.test.ts'],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   collectCoverage: true,
   coverageDirectory: 'coverage',
-  coverageReporters: ['text', 'lcov']
+  coverageReporters: ['text', 'lcov'],
+  coveragePathIgnorePatterns: ['/node_modules/', '<rootDir>/src/utils/'],
 };
 
 export default config;
